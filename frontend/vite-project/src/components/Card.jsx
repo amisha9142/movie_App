@@ -42,30 +42,27 @@ function Card({ id , weekValue }) {
     return days[date.getDay()];
   };
   
-  // // Example usage:
-  // const dayOfWeek = getDayOfWeek();
-  // console.log(dayOfWeek); // Output: "Tuesday"
-  
   return (
-    <div className="flex ml-3">
+    <div className="flex">
       <div className="flex flex-wrap">
        
         {weekData.map(movie => (
-          <div key={movie._id} className='border border-black p-2' style={{ width: "130px", height: "130px" }}>
-            {/* <h2 className="text-xl font-bold mb-4">{movie.availability.map(date => date.date)}</h2> */}
-            <p>{getDayOfWeek(movie.availability[0].date)}</p> 
-            <CancelIcon sx={{ color: "red", marginLeft: "100px", cursor: "pointer" }} onClick={handleDelete} />
-            <p className='pl-10'><b>{movie.timing}</b><br/>ends {movie.endTime}</p>
-            <p className='font-semibold pl-1 pt-2'>
+          <div key={movie._id} className='border border-black ' style={{ width: "130px", height: "130px"}}>
+          <p className='relative bottom-6'>{getDayOfWeek(movie.availability[0].date)}</p> 
+            <CancelIcon sx={{ color: "red",marginLeft: "100px",cursor: "pointer",position:"relative",bottom:"18px"}} onClick={handleDelete} />
+
+            <p className='pl-7 font-semibold' style={{position:"relative",bottom:"21px"}}>{movie.timing}</p>
+            {/* <b className='ml-10' style={{position:"relative",bottom:"21px"}}>Max 1</b> */}
+            <p className='font-semibold pl-1' style={{position:"relative",bottom:"11px"}}>
               <RemoveIcon className='bg-blue-100 rounded-xl' onClick={decreaseValue} />&nbsp; Max {movie.seatingCapacity} &nbsp;
               <AddIcon className='bg-blue-100 rounded-xl' onClick={increaseValue} />
             </p>
-            <p className='pl-6 pt-4'>{movie.availability[0].seatsAvailable} seats left</p>
+            <p className='pl-6 pt-1'>{movie.availability[0].seatsAvailable} seats left</p>
           </div>
         ))}
       </div>
     </div>
   );
-        }
+}
 
 export default Card;
