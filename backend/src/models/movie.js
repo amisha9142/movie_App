@@ -5,6 +5,8 @@ const movieSchema = new mongoose.Schema({
     timing: String,
     seatingCapacity: Number,
     week:Number,
+    month:String,
+    year:Number,
     availability: [
         {
             date: Date,

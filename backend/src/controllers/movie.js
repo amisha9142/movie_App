@@ -1,9 +1,9 @@
 const Movie = require("../models/movie")
 exports.createMovie  = async(req,res)=>{
     try{
-        const{title,timing,seatingCapacity,availability,week} = req.body
+        const{title,timing,seatingCapacity,availability,week,month,year} = req.body
         const movie = await Movie.create({
-            title,timing,seatingCapacity,availability,week
+            title,timing,seatingCapacity,availability,week,month, year
         })
         return res.status(201).json({status:true,message:"movie created successfully",data:movie})
     }
