@@ -13,22 +13,26 @@ import IconButton from '@mui/material/IconButton';
 
 
 function Login() {
-  const [email,setEmail] = useState("")
+  const [userId,setUserId] = useState("")
   const [password,setPassword] = useState("")
+  const [showPassword , setShowPassword] = useState(false)
 
+  const togglePassword = ()=>{
+    setShowPassword = true
+  }
   const navigate =  useNavigate();
 
   const handleLogin = async()=>{
     try{
         const response = await axios.post(
             "http://localhost:3000/api/admin/loginAdmin",
-            {email,password}
+            {userId,password}
         )
        
         toast.success(response.data.message)
-        navigate('/card'); 
+        navigate('/parent'); 
 
-        setEmail("")
+        setUserId("")
         setPassword("")
     }
     catch(error){
@@ -48,13 +52,13 @@ function Login() {
         
 <TextField
   id="outlined-basic"
-  label="Email"
+  label="userId"
   variant="outlined"
   style={{ width: "320px" }}
   InputProps={{
     className: 'px-3 mt-2 mb-5'
   }}
-  value={email} onChange={(e)=>setEmail(e.target.value)}
+  value={userId} onChange={(e)=>setUserId(e.target.value)}
 />
 
     <TextField
@@ -62,17 +66,18 @@ function Login() {
       label="Password"
       variant="outlined"
       style={{ width: "320px" }}
-      type={password ? "text" : "password"}
+      type={showPassword ? "text" : "password"}
       InputProps={{
         className: 'px-3 mt-1',
         endAdornment: (
           <InputAdornment position="end">
             <IconButton
               aria-label="toggle password visibility"
-              onClick={() => setPassword(!password)}
+              onClick={() => setShowPassword(!showPassword)}
               edge="end"
+              
             >
-              {password ? <VisibilityIcon/> : <VisibilityOffIcon />}
+              {showPassword ? <VisibilityIcon/> : <VisibilityOffIcon />}
             </IconButton>
           </InputAdornment>
         )
