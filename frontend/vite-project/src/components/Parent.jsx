@@ -6,6 +6,7 @@ import { Button } from '@mui/material'
 
 function Parent() {
   const [weekValue, setWeekValue] = useState(1);
+
   const handleNextWeek = () => {
     setWeekValue(prevWeek => prevWeek + 1);
   };
