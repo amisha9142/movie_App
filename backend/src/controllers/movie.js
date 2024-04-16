@@ -1,9 +1,9 @@
 const Movie = require("../models/movie")
 exports.createMovie  = async(req,res)=>{
     try{
-        const{title,timing,seatingCapacity,availability,week,month,year} = req.body
+        const{title,timing,availability,week,month,year} = req.body
         const movie = await Movie.create({
-            title,timing,seatingCapacity,availability,week,month, year
+            title,timing,availability,week,month, year
         })
         return res.status(201).json({status:true,message:"movie created successfully",data:movie})
     }
@@ -60,24 +60,32 @@ exports.deleteMovie = async(req,res)=>{
   }
 
 
-
-  // update api
-  exports.updateSeats = async (req, res) => {
+// updateSeats API
+exports.updateSeats = async (req, res) => {
     const { movieId, availabilityId } = req.params;
-    const { seatsAvailable } = req.body;
+    const { seatingCapacity } = req.body;
   
     try {
+      // Find the movie by ID
       const movie = await Movie.findById(movieId);
       if (!movie) {
         return res.status(404).json({ error: 'Movie not found' });
       }
   
+      // Find the availability by ID
       const availability = movie.availability.id(availabilityId);
       if (!availability) {
         return res.status(404).json({ error: 'Availability not found' });
       }
   
-      availability.seatsAvailable = seatsAvailable;
+      // Update seating capacity if provided
+      if (seatingCapacity !== undefined && seatingCapacity !== availability.seatingCapacity) {
+        const seatCapacityDifference = seatingCapacity - availability.seatingCapacity;
+        availability.seatingCapacity = seatingCapacity;
+        availability.seatsAvailable += seatCapacityDifference;
+      }
+  
+      // Save the updated movie
       await movie.save();
   
       res.status(200).json({ message: 'Seat availability updated successfully' });
@@ -86,3 +94,4 @@ exports.deleteMovie = async(req,res)=>{
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+  

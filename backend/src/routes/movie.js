@@ -5,6 +5,6 @@ const route = express.Router();
 route.post("/create-movie",createMovie);
 route.get("/fetch-movies",getMovies);
 route.delete('/:movieId/:availabilityId',deleteMovie)
-route.put('/api/movie/update-seats/:movieId/:availabilityId',updateSeats)
+route.put('/update-seats/:movieId/:availabilityId',updateSeats)
 
 module.exports = route;
